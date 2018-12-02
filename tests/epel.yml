@@ -23,6 +23,7 @@
 
     - name: epel host group is not empty
       assert:
+        that:
         - groups['epel']
         - groups['dontexist']
 
