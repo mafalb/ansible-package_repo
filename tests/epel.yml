@@ -1,0 +1,26 @@
+# vim: set ft=yaml ts=2:
+---
+
+- hosts: cihost
+  tasks:
+    - name: run container {{ item.container_name }}
+      include_role:
+        name: mafalb.ansible_ci/node/docker
+      with_items: "{{ package_repo.tests.epel.containers }}"
+      vars:
+            container_name: "{{ item.container_name }}"
+            volumes: "{{ item.volumes }}"
+            image_name: "{{ item.image_name }}"
+            src: "{{ item.src }}"
+            member_of_groups: "{{ item.member_of_groups }}"
+
+- hosts: epel
+  roles:
+    - role: package_repo
+      package_repo_name: epel
+  tasks:
+    - name: we can install something from epel
+      package:
+        name: epel-rpm-macros.noarch
+        state: present
+...
