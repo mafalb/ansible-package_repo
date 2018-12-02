@@ -26,10 +26,8 @@ before_install:
 install:
   - ansible-playbook -b -D -t all,debug roles/mafalb.ansible_ci/install.yml
 script:
-  - ansible-lint --force-color -v before_install.yml
-  - ansible-lint --force-color -v install.yml
-  - ansible-lint --force-color -v tests/test.yml
-  - ansible-lint --force-color -v tests/idempotency.yml
+  - ansible-lint --force-color -v tests/epel.yml
+
   - ansible-playbook -D -t all,debug tests/readme.yml
   - ansible-playbook -D -t all,debug tests/license.yml
 
