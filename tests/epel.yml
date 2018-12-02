@@ -16,7 +16,7 @@
 
 - hosts: epel
   roles:
-    - role: package_repo
+    - role: mafalb.package_repo
       package_repo_name: epel
   tasks:
     - name: we can install something from epel
