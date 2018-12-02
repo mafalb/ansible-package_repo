@@ -21,6 +21,11 @@
             src: "{{ item.src }}"
             member_of_groups: "{{ item.member_of_groups }}"
 
+    - name: epel host group is not empty
+      assert:
+        - groups['epel']
+        - groups['dontexist']
+
 - hosts: epel
   roles:
     - role: mafalb.package_repo
