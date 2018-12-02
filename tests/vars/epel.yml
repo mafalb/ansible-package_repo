@@ -2,8 +2,8 @@
 ---
 
 package_repo:
-  epel:
-    tests:
+  tests:
+    epel:
       containers:
         - container_name: centos-7
           image_name: centos-7-image
