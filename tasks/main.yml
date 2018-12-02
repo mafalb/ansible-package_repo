@@ -15,5 +15,4 @@
 - name: include_tasks for {{ package_repo_name }}
   include_tasks:
     file: "{{ package_repo_name }}.yml"
-
 ...
