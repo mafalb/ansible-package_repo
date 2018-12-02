@@ -5,6 +5,11 @@
   roles:
     - role: mafalb.package_repo/tests
   tasks:
+    - debug: var=package_repo
+      tags:
+        - never
+        - debug
+
     - name: run container {{ item.container_name }}
       include_role:
         name: mafalb.ansible_ci/node/docker
