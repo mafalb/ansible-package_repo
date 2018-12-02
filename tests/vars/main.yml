@@ -13,3 +13,4 @@ package_repo:
           member_of_groups:
             - testnodes
             - centos
+            - epel
