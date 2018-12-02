@@ -25,7 +25,6 @@
       assert:
         that:
         - groups['epel']
-        - groups['dontexist']
 
 - hosts: epel
   roles:
