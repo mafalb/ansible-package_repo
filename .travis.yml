@@ -5,7 +5,7 @@ dist: xenial
 language: minimal
 env:
   global:
-    - ANSIBLE_ROLE_NAME=mafalb.package_repos
+    - ANSIBLE_ROLE_NAME=mafalb.package_repo
     - CI=travis
     - ANSIBLE_FORCE_COLOR=1
   matrix:
@@ -20,10 +20,11 @@ before_install:
   - pip list
   - ansible --version
   - ansible localhost -m setup
-  - ansible-playbook -b -D -t all,debug -i cihost, -c local before_install.yml
+  - ansible-galaxy install -g -r tests/requirements.yml -p roles
+  - ansible-playbook -b -D -t all,debug roles/mafalb.ansible_ci/before_install.yml -i cihost, -c local
   - ls -l roles
 install:
-  - ansible-playbook -b -D -t all,debug install.yml
+  - ansible-playbook -b -D -t all,debug roles/mafalb.ansible_ci/install.yml
 script:
   - ansible-lint --force-color -v before_install.yml
   - ansible-lint --force-color -v install.yml
