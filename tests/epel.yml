@@ -2,6 +2,8 @@
 ---
 
 - hosts: cihost
+  roles:
+    - role: mafalb.package_repo/tests
   tasks:
     - name: run container {{ item.container_name }}
       include_role:
