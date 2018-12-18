@@ -35,7 +35,7 @@
     file: epel
     metalink: "https://mirrors.fedoraproject.org/metalink?repo=epel-debug-{{ ansible_distribution_major_version }}&arch=$basearch"
     failovermethod: priority
-    enabled: "{{ package_repo_is_enabled|default(false) }}"
+    enabled: false
     gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
 
@@ -46,6 +46,6 @@
     file: epel
     metalink: "https://mirrors.fedoraproject.org/metalink?repo=epel-source-{{ ansible_distribution_major_version }}&arch=$basearch"
     failovermethod: priority
-    enabled: "{{ package_repo_is_enabled|default(false) }}"
+    enabled: false
     gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
