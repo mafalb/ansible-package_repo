@@ -1,0 +1,45 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: assertions
+  assert:
+    that:
+      - ansible_os_family == 'RedHat'
+      - ansible_distribution_major_version in ["6","7"]
+      - package_repo_version
+
+- name: RPM-GPG-KEYs does exist
+  with_items:
+    - RPM-GPG-KEY-ZABBIX-79EA5ED4
+    - RPM-GPG-KEY-ZABBIX-A14FE591
+  copy:
+    src: "{{ item }}"
+    dest: /etc/pki/rpm-gpg/
+
+- name: RPM-GPG-KEYs are imported
+  with_items:
+    - RPM-GPG-KEY-ZABBIX-79EA5ED4
+    - RPM-GPG-KEY-ZABBIX-A14FE591
+  rpm_key:
+    key: /etc/pki/rpm-gpg/{{ item }}
+    state: present
+
+- name: repo for zabbix does exist
+  yum_repository:
+    name: zabbix
+    description: Zabbix Official Repository - $basearch
+    file: zabbix
+    baseurl: http://repo.zabbix.com/zabbix/{{ package_repo_version }}/rhel/{{ ansible_distribution_major_version }}/$basearch/
+    enabled: "{{ package_repo_is_enabled|default(true) }}"
+    gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-A14FE591
+
+- name: repo for zabbix non-supported does exist
+  yum_repository:
+    name: zabbix-non-supported
+    description: Zabbix Official Repository non-supported - $basearch
+    file: zabbix
+    baseurl: http://repo.zabbix.com/non-supported/rhel/{{ ansible_distribution_major_version }}/$basearch/
+    enabled: false
+    gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-79EA5ED4

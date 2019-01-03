@@ -3,9 +3,22 @@
 ## Basic Usage
 
 ```
+# install epel
+#
 - hosts: localhost
-  - role: package_repo
+  roles:
+    - role: package_repo
       package_repo_name: epel
+```
+
+```
+# install zabbix repo for zabbix 3.4
+#
+- hosts: localhost
+  roles:
+    - role: mafalb.package_repo
+      package_repo_name: zabbix
+      package_repo_version: 3.4
 ```
 
 ## Variables
