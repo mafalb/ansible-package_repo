@@ -1,0 +1,35 @@
+# vim: set ft=yaml ts=2:
+---
+
+- debug: var=ovirt.version
+  tags:
+    - never
+    - debug
+
+- name: assertions
+  assert:
+    that:
+      - ansible_os_family == 'RedHat'
+      - ansible_distribution_major_version in ["7"]
+      - ovirt.version
+
+- name: rpm gpg key does exist
+  copy:
+    src: RPM-GPG-ovirt-{{ ovirt.version }}
+    dest: /etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}
+
+- name: rpm gpg key is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}
+    state: present
+
+- name: repo does exist
+  yum_repository:
+    name: ovirt-{{ ovirt.version }}
+    description: Latest oVirt {{ ovirt.version }} Release
+    file: ovirt-{{ ovirt.version }}
+    mirrorlist: http://resources.ovirt.org/pub/yum-repo/mirrorlist-ovirt-{{ ovirt.version }}-el$releasever
+    enabled: "{{ package_repo_is_enabled.ovirt.ovirt|default(true) }}"
+    gpgcheck: true
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}"
+

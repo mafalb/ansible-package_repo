@@ -1,0 +1,5 @@
+---
+
+package_repo_is_enabled:
+  ovirt:
+    ovirt: true
