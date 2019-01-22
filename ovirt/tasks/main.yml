@@ -6,12 +6,18 @@
     - never
     - debug
 
+- debug: var=role_path
+  tags:
+    - never
+    - debug
+
 - name: assertions
   assert:
     that:
       - ansible_os_family == 'RedHat'
       - ansible_distribution_major_version in ["7"]
       - ovirt.version
+      - "(role_path + '/files/RPM-GPG-ovirt-' + ovirt.version) is file"
 
 - name: rpm gpg key does exist
   copy:
@@ -33,3 +39,9 @@
     gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}"
 
+- name: epel includepkgs are present
+  when: false
+  yum_repository:
+    name: epel
+    file: epel
+    includepkgs: "{{ package_repo.ovirt.epel_includes }}"
