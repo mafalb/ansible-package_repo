@@ -1,9 +1,5 @@
 ---
 
-package_repo_is_enabled:
-  rpmfusion:
-    rpmfusion: true
-    debuginfo: false
-    source: false
-package_repo_gpgcheck:
-  rpmfusion:
+package_repo:
+  epel:
+    includepkgs: "{{ package_repo_epel_includepkgs|default(false) }}"
