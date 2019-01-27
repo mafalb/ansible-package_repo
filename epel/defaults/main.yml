@@ -1,0 +1,9 @@
+---
+
+package_repo_is_enabled:
+  epel:
+    epel: true
+    debuginfo: false
+    source: false
+package_repo_gpgcheck:
+  epel:

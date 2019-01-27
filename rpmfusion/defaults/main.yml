@@ -1,0 +1,9 @@
+---
+
+package_repo_is_enabled:
+  rpmfusion:
+    rpmfusion: true
+    debuginfo: false
+    source: false
+package_repo_gpgcheck:
+  rpmfusion:

@@ -2,7 +2,7 @@
 ---
 
 galaxy_info:
-  role_name: mafalb.package_repo
+  role_name: package_repos
   author: Markus Falb
   description: An ansible role for package repositories (yum, apt, ...)
 
@@ -44,6 +44,5 @@ galaxy_info:
 
 dependencies:
   - role: mafalb.package_repo/epel
-    when: package_repo_name == 'rpmfusion'
     package_repo_name: epel
 ...
