@@ -5,4 +5,5 @@
 - import_playbook: epel.yml
 - import_playbook: epel2.yml
 - import_playbook: rpmfusion.yml
+- import_playbook: ovirt.yml
 ...
