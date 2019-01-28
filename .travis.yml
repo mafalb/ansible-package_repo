@@ -37,3 +37,4 @@ script:
 
 after_script:
   - ls -lR
+  - ls -l $CI_BUILD_DIR/..
