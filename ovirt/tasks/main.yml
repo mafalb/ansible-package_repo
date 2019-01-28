@@ -29,6 +29,26 @@
     key: /etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}
     state: present
 
+- name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} does exist
+  copy:
+    src: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+    dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+
+- name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+    state: present
+
+- name: RPM-GPG-KEY-CentOS-SIG-Storage does exist
+  copy:
+    src: RPM-GPG-KEY-CentOS-SIG-Storage
+    dest: /etc/pki/rpm-gpg/
+
+- name: RPM-GPG-KEY-CentOS-SIG-Storage is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+    state: present
+
 - name: repo does exist
   yum_repository:
     name: ovirt-{{ ovirt.version }}

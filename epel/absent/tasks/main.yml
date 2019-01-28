@@ -21,3 +21,8 @@
   file:
     path: /etc/yum.repos.d/epel.repo
     state: absent
+
+- name: epel-release is absent
+  package:
+    name: epel-release
+    state: absent
