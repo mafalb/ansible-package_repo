@@ -44,9 +44,19 @@
     src: RPM-GPG-KEY-CentOS-SIG-Storage
     dest: /etc/pki/rpm-gpg/
 
-- name: RPM-GPG-KEY-CentOS-SIG-Storage is imported
+- name: RPM-GPG-KEY-CentOS-SIG-Storage E451E5B5 is imported
   rpm_key:
     key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+    state: present
+
+- name: RPM-GPG-KEY-CentOS-SIG-OpsTools does exist
+  copy:
+    src: RPM-GPG-KEY-CentOS-SIG-OpsTools
+    dest: /etc/pki/rpm-gpg/
+
+- name: RPM-GPG-KEY-CentOS-SIG-OpsTools 51bc2a13 is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-OpsTools
     state: present
 
 - name: repo does exist

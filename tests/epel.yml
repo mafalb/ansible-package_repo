@@ -16,7 +16,4 @@
       package:
         name: epel-rpm-macros.noarch
         state: present
-- hosts: epel
-  roles:
-    - role: mafalb.package_repo/epel/absent
 ...
