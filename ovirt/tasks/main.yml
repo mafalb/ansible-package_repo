@@ -81,16 +81,5 @@
 
 - name: ovirt-release is present
   package:
-    name: ovirt-release{{ ovirt.version|replace('.','') }}
+    name: http://resources.ovirt.org/pub/yum-repo/ovirt-release{{ ovirt.version|replace('.','') }}.rpm
     state: present
-
-- name: repo does exist
-  yum_repository:
-    name: ovirt-{{ ovirt.version }}
-    description: Latest oVirt {{ ovirt.version }} Release
-    file: ovirt-{{ ovirt.version }}
-    mirrorlist: http://resources.ovirt.org/pub/yum-repo/mirrorlist-ovirt-{{ ovirt.version }}-el$releasever
-    enabled: "{{ package_repo_is_enabled.ovirt.ovirt|default(true) }}"
-    gpgcheck: true
-    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}"
-
