@@ -1,20 +1,7 @@
 # vim: set ft=yaml ts=2:
 ---
-- hosts: cihost
-  vars_files:
-    - vars/main.yml
-  roles:
-    - role: mafalb.ansible_ci/node
-      ansible_ci_test_name: rpmfusion
-      ansible_ci_node_type: docker
-      ansible_ci_node_image_name: centos7
-
-- hosts: rpmfusion
-  roles:
-  - role: mafalb.package_repo/rpmfusion
-  tasks:
-    - name: ffmpeg-libs is present
-      package:
-        name: ffmpeg-libs
-        state: present
+- import_playbook: license.yml
+- import_playbook: readme.yml
+- import_playbook: epel.yml
+- import_playbook: rpmfusion.yml
 ...
