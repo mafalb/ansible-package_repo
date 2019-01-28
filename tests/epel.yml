@@ -10,8 +10,7 @@
       ansible_ci_node_image_name: centos7
 - hosts: epel
   roles:
-    - role: mafalb.package_repo
-      package_repo_name: epel
+    - role: mafalb.package_repo/epel
   tasks:
     - name: we can install something from epel
       package:
