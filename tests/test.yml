@@ -2,7 +2,7 @@
 ---
 - hosts: cihost
   vars_files:
-    - main.yml
+    - vars/main.yml
   roles:
     - role: mafalb.ansible_ci/node
       ansible_ci_test_name: rpmfusion
