@@ -9,7 +9,7 @@
 - name: assertions
   assert:
     that:
-      - package_repo_name != false
+      - package_repo_name
       - (role_path + '/tasks/' + package_repo_name + '.yml') is file
 
 - name: include_tasks for {{ package_repo_name }}
