@@ -7,3 +7,4 @@ package_repo_is_enabled:
     source: false
 package_repo_gpgcheck:
   epel:
+    epel: true
