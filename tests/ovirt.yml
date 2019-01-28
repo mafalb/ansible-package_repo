@@ -9,6 +9,9 @@
       ansible_ci_node_type: docker
       ansible_ci_node_image_name: centos7
 - hosts: ovirt
+  vars:
+    ovirt:
+      version: 4.2
   roles:
     - role: mafalb.package_repo/ovirt
 ...
