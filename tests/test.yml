@@ -1,6 +1,8 @@
 # vim: set ft=yaml ts=2:
 ---
 - hosts: cihost
+  vars_files:
+    - main.yml
   roles:
     - role: mafalb.ansible_ci/node
       ansible_ci_test_name: rpmfusion
