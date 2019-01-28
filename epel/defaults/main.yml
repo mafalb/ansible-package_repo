@@ -8,3 +8,5 @@ package_repo_is_enabled:
 package_repo_gpgcheck:
   epel:
     epel: true
+    debuginfo: true
+    source: true
