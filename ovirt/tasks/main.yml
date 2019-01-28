@@ -79,6 +79,11 @@
     key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo
     state: present
 
+- name: ovirt-release is present
+  package:
+    name: ovirt-release{{ ovirt.version|replace('.','') }}
+    state: present
+
 - name: repo does exist
   yum_repository:
     name: ovirt-{{ ovirt.version }}
@@ -89,7 +94,3 @@
     gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}"
 
-- name: ovirt-release is present
-  package:
-    name: ovirt-release{{ ovirt.version|replace('.','') }}
-    state: present
