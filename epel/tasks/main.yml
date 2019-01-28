@@ -12,7 +12,7 @@
     src: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
     dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
 
-- name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} is imported
+- name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} 352c64e5 is imported
   rpm_key:
     key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
     state: present
