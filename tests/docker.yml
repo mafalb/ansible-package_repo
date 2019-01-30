@@ -7,7 +7,7 @@
     - role: mafalb.ansible_ci/node
       ansible_ci_test_name: docker
       ansible_ci_node_type: docker
-      ansible_ci_node_image_name: centos7
+      ansible_ci_node_image_name: ubuntu16
 - hosts: docker
   roles:
     - role: mafalb.package_repo/docker

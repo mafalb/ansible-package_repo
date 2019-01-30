@@ -12,3 +12,11 @@ tests:
       - centos7
       - el
       - el7
+    ubuntu16:
+      src: ubuntu-16-python2
+      volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      member_of_groups:
+      - ubuntu
+      - ubuntu16
+      - xenial
