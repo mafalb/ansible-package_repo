@@ -7,6 +7,11 @@
       - ansible_os_family == 'RedHat'
       - ansible_distribution_major_version in ["7"]
 
+- name: release package is absent
+  package:
+    name: rpmfusion-free-release
+    state: absent
+
 - name: pgp key for rpmfusion does exist (in filesystem)
   copy:
     src: RPM-GPG-KEY-rpmfusion-free-el-{{ ansible_distribution_major_version }}
@@ -29,7 +34,7 @@
 
 - name: debuginfo repo does exist
   yum_repository:
-    name: rpmfusion-free-updates-debug
+    name: rpmfusion-free-updates-debuginfo
     description: RPM Fusion for EL {{ ansible_distribution_major_version }} - Free - Updates Debug
     file: rpmfusion-free-updates
     mirrorlist: http://mirrors.rpmfusion.org/mirrorlist?repo=free-el-updates-released-debug-{{ ansible_distribution_major_version }}&arch=$basearch

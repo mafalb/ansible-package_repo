@@ -49,5 +49,8 @@ galaxy_info:
     - ovirt
 
 dependencies:
-  - role: mafalb.package_repo/epel/absent
+  - role: mafalb.package_repo/rpmfusion
+    package_repo_state: absent
+  - role: mafalb.package_repo/epel
+    package_repo_state: absent
 ...

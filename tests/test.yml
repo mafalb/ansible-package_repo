@@ -6,4 +6,6 @@
 - import_playbook: epel2.yml
 - import_playbook: rpmfusion.yml
 - import_playbook: ovirt.yml
+- import_playbook: zabbix.yml
+- import_playbook: docker.yml
 ...
