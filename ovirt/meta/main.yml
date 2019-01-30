@@ -50,9 +50,9 @@ galaxy_info:
 
 dependencies:
   - role: mafalb.package_repo/rpmfusion
-    when: package_repo_state: absent
+    when: package_repo_state == 'absent'
     package_repo_state: absent
   - role: mafalb.package_repo/epel
-    when: package_repo_state: absent
+    when: package_repo_state == 'absent'
     package_repo_state: absent
 ...
