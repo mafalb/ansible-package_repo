@@ -49,5 +49,5 @@ galaxy_info:
 
 dependencies:
   - role: mafalb.package_repo/epel
-    when: package_repo_state != 'absent'
+    when: package_repo.state == 'present'
 ...
