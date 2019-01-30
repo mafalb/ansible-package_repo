@@ -30,7 +30,7 @@
       - http://mirror.ventraip.net.au/elrepo/elrepo/el{{ ansible_distribution_major_version }}/$basearch/
     mirrorlist: "http://mirrors.elrepo.org/mirrors-elrepo.el{{ ansible_distribution_major_version }}"
     enabled: "{{ package_repo_is_enabled|default(true) }}"
-    gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
+    gpgcheck: true
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
     protect: 0
 
@@ -47,7 +47,7 @@
       - http://mirror.ventraip.net.au/elrepo/elrepo/testing/el{{ ansible_distribution_major_version }}/$basearch/
     mirrorlist: "http://mirrors.elrepo.org/mirrors-elrepo-testing.el{{ ansible_distribution_major_version }}"
     enabled: false
-    gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
+    gpgcheck: true
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
     protect: 0
 
@@ -64,14 +64,14 @@
       - http://mirror.ventraip.net.au/elrepo/elrepo/kernel/el{{ ansible_distribution_major_version }}/$basearch/
     mirrorlist: "http://mirrors.elrepo.org/mirrors-elrepo-kernel.el{{ ansible_distribution_major_version }}"
     enabled: false
-    gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
+    gpgcheck: true
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
     protect: 0
 
 - name: repo for elrepo extras does exist
   yum_repository:
     name: elrepo-extras
-    description: ELRepo.org Community Enterprise Linux Kernel Repository - el{{ ansible_distribution_major_version }}
+    description: ELRepo.org Community Enterprise Linux Extras Repository - el{{ ansible_distribution_major_version }}
     file: elrepo
     baseurl:
       - http://elrepo.org/linux/elrepo/extras/el{{ ansible_distribution_major_version }}/$basearch/
@@ -81,7 +81,7 @@
       - http://mirror.ventraip.net.au/elrepo/elrepo/extras/el{{ ansible_distribution_major_version }}/$basearch/
     mirrorlist: "http://mirrors.elrepo.org/mirrors-elrepo-extras.el{{ ansible_distribution_major_version }}"
     enabled: false
-    gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
+    gpgcheck: true
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
     protect: 0
 

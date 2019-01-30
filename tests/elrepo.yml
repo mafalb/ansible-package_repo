@@ -1,0 +1,19 @@
+# vim: set ft=yaml ts=2:
+---
+- hosts: cihost
+  vars_files:
+    - vars/main.yml
+  roles:
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: elrepo
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+- hosts: elrepo
+  roles:
+    - role: mafalb.package_repo/elrepo
+  tasks:
+    - name: we can install something from elrepo
+      package:
+        name: kmod-cciss
+        state: present
+...

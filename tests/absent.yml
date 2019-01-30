@@ -1,4 +1,33 @@
 # vim: set ft=yaml ts=2:
 ---
-- import_playbook: wso2-absent.yml
+# reuse the nodes from recent runs
+- hosts: wso2
+  roles:
+    - role: mafalb.package_repo/wso2
+      package_repo_state: absent
+
+- hosts: epel
+  roles:
+    - role: mafalb.package_repo/epel
+      package_repo_state: absent
+
+- hosts: elrepo
+  roles:
+    - role: mafalb.package_repo/elrepo
+      package_repo_state: absent
+
+- hosts: zabbix
+  roles:
+    - role: mafalb.package_repo/zabbix
+      package_repo_state: absent
+
+- hosts: rpmfusion
+  roles:
+    - role: mafalb.package_repo/rpmfusion
+      package_repo_state: absent
+
+- hosts: docker
+  roles:
+    - role: mafalb.package_repo/docker
+      package_repo_state: absent
 ...

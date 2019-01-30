@@ -1,5 +1,0 @@
----
-
-package_repo:
-  epel:
-    includepkgs: "{{ package_repo_epel_includepkgs|default(false) }}"
