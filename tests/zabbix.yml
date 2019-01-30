@@ -17,6 +17,6 @@
       package:
         name: zabbix-agent
         state: present
-        disablerepo: *
+        disablerepo: '*'
         enablerepo: zabbix
 ...
