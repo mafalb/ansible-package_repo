@@ -18,3 +18,4 @@
       - rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}
       - rpmfusion-free-release-{{ ansible_distribution_major_version }}
       - epel-release
+    state: absent
