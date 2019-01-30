@@ -1,12 +1,6 @@
 # vi: set ft=yaml ts=2:
 ---
 
-- name: assertions
-  assert:
-    that:
-      - ansible_distribution == 'Ubuntu'
-      - ansible_distribution_release in in ["xenial"]
-
 - name: docker repo is absent
   apt_repository:
     repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
