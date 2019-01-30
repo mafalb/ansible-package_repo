@@ -4,7 +4,7 @@
 - name: assertions
   assert:
     that:
-      - ansible_Distribution == 'Ubuntu'
+      - ansible_distribution == 'Ubuntu'
       - ansible_distribution_major_version in ["16"]
       - package_repo.state in [ 'present', 'absent' ]
 
