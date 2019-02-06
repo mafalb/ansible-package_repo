@@ -13,7 +13,6 @@
     - role: mafalb.package_repo/elasticsearch
   tasks:
     - name: we can install something
-      check_mode: true
       package:
         name: heartbeat-elastic
         state: present
