@@ -1,7 +1,5 @@
 # vim: set ft=yaml ts=2:
 ---
-
----
 galaxy_info:
   role_name: mafalb.package_repo
   author: Markus Falb
