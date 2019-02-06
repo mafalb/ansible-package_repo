@@ -30,4 +30,9 @@
   roles:
     - role: mafalb.package_repo/docker
       package_repo_state: absent
+
+- hosts: elasticsearch
+  roles:
+    - role: mafalb.package_repo/elasticsearch
+      package_repo_state: absent
 ...

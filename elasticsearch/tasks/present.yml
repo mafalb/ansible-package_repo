@@ -1,0 +1,23 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: rpm key is present
+  copy:
+    src: RPM-GPG-KEY-elasticsearch
+    dest: /etc/pki/rpm-gpg/
+
+- name: rpm key is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-elasticsearch
+    state: present
+
+- name: repo for elasticsearch does exist
+  yum_repository:
+    name: elasticsearch
+    description: Elasticsearch repository
+    file: elasticsearch
+    baseurl:
+      - https://artifacts.elastic.co/packages/6.x/yum
+    enabled: true
+    gpgcheck: true
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elasticsearch
