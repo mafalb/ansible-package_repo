@@ -8,6 +8,7 @@
       ansible_ci_test_name: elasticsearch
       ansible_ci_node_type: docker
       ansible_ci_node_image_name: centos7
+
 - hosts: elasticsearch
   roles:
     - role: mafalb.package_repo/elasticsearch
