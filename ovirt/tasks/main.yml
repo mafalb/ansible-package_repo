@@ -1,0 +1,85 @@
+# vim: set ft=yaml ts=2:
+---
+
+- debug: var=ovirt.version
+  tags:
+    - never
+    - debug
+
+- debug: var=role_path
+  tags:
+    - never
+    - debug
+
+- name: assertions
+  assert:
+    that:
+      - ansible_os_family == 'RedHat'
+      - ansible_distribution_major_version in ["7"]
+      - ovirt.version is defined
+      - "(role_path + '/files/RPM-GPG-ovirt-' + ovirt.version|string) is file"
+
+- name: rpm gpg key does exist
+  copy:
+    src: RPM-GPG-ovirt-{{ ovirt.version }}
+    dest: /etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}
+
+- name: rpm gpg key is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}
+    state: present
+
+- name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} does exist
+  copy:
+    src: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+    dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+
+- name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+    state: present
+
+- name: RPM-GPG-KEY-CentOS-SIG-Storage does exist
+  copy:
+    src: RPM-GPG-KEY-CentOS-SIG-Storage
+    dest: /etc/pki/rpm-gpg/
+
+- name: RPM-GPG-KEY-CentOS-SIG-Storage E451E5B5 is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+    state: present
+
+- name: RPM-GPG-KEY-CentOS-SIG-OpsTools does exist
+  copy:
+    src: RPM-GPG-KEY-CentOS-SIG-OpsTools
+    dest: /etc/pki/rpm-gpg/
+
+- name: RPM-GPG-KEY-CentOS-SIG-OpsTools 51bc2a13 is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-OpsTools
+    state: present
+
+- name: RPM-GPG-KEY-CentOS-SIG-Virtualization does exist
+  copy:
+    src: RPM-GPG-KEY-CentOS-SIG-Virtualization
+    dest: /etc/pki/rpm-gpg/
+
+- name: RPM-GPG-KEY-CentOS-SIG-Virtualization 61E8806C is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
+    state: present
+
+- name: RPM-GPG-KEY-CentOS-SIG-SCLo does exist
+  copy:
+    src: RPM-GPG-KEY-CentOS-SIG-SCLo
+    dest: /etc/pki/rpm-gpg/
+
+- name: RPM-GPG-KEY-CentOS-SIG-SCLo F2EE9D55 is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo
+    state: present
+
+- name: ovirt-release is present
+  package:
+    name: http://resources.ovirt.org/pub/yum-repo/ovirt-release{{ ovirt.version|replace('.','') }}.rpm
+    state: present

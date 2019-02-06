@@ -2,9 +2,9 @@
 ---
 
 galaxy_info:
-  role_name: mafalb.package_repo
+  role_name: package_repo/ovirt
   author: Markus Falb
-  description: An ansible role for package repositories (yum, apt, ...)
+  description: An ansible role for ovirt repo
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -43,8 +43,16 @@ galaxy_info:
     versions:
      - 7
 
+  galaxy_tags:
+    - repository
+    - yum
+    - ovirt
 
-  galaxy_tags: []
-
-dependencies: []
+dependencies:
+  - role: mafalb.package_repo/rpmfusion
+    when: package_repo_state == 'absent'
+    package_repo_state: absent
+  - role: mafalb.package_repo/epel
+    when: package_repo_state == 'absent'
+    package_repo_state: absent
 ...

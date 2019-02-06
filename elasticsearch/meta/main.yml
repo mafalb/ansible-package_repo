@@ -2,7 +2,7 @@
 ---
 
 galaxy_info:
-  role_name: mafalb.package_repo
+  role_name: mafalb.package_repo/elasticsearch
   author: Markus Falb
   description: An ansible role for package repositories (yum, apt, ...)
 
@@ -43,8 +43,10 @@ galaxy_info:
     versions:
      - 7
 
-
-  galaxy_tags: []
+  galaxy_tags:
+    - elasticsearch
+    - yum
+    - repository
 
 dependencies: []
 ...

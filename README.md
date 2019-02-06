@@ -7,8 +7,7 @@
 #
 - hosts: localhost
   roles:
-    - role: package_repo
-      package_repo_name: epel
+    - role: package_repo/epel
 ```
 
 ```
@@ -16,16 +15,12 @@
 #
 - hosts: localhost
   roles:
-    - role: mafalb.package_repo
-      package_repo_name: zabbix
+    - role: mafalb.package_repo/zabbix
       package_repo_version: 3.4
 ```
 
 ## Variables
 
-```
-package_repo_name: epel
-```
 
 the name of the package
 ```
@@ -34,11 +29,6 @@ package_repo_is_enabled: true|false
 
 override the repo specific default value
 
-```
-package_repo_gpgcheck: true
-```
-
-you can disable the default signature checking
 
 ## License
 

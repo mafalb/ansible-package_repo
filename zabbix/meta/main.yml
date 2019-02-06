@@ -2,9 +2,9 @@
 ---
 
 galaxy_info:
-  role_name: mafalb.package_repo
+  role_name: package_repo/zabbix
   author: Markus Falb
-  description: An ansible role for package repositories (yum, apt, ...)
+  description: An ansible role for ovirt repo
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -43,8 +43,10 @@ galaxy_info:
     versions:
      - 7
 
-
-  galaxy_tags: []
+  galaxy_tags:
+    - repository
+    - yum
+    - zabbix
 
 dependencies: []
 ...

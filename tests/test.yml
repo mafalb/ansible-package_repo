@@ -1,3 +1,11 @@
 # vim: set ft=yaml ts=2:
 ---
+- import_playbook: license.yml
+- import_playbook: readme.yml
+- import_playbook: epel.yml
+- import_playbook: rpmfusion.yml
+- import_playbook: ovirt.yml
+- import_playbook: zabbix.yml
+- import_playbook: docker.yml
+- import_playbook: elasticsearch.yml
 ...

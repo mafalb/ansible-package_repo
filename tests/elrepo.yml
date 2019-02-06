@@ -5,15 +5,15 @@
     - vars/main.yml
   roles:
     - role: mafalb.ansible_ci/node
-      ansible_ci_test_name: epel
+      ansible_ci_test_name: elrepo
       ansible_ci_node_type: docker
       ansible_ci_node_image_name: centos7
-- hosts: epel
+- hosts: elrepo
   roles:
-    - role: mafalb.package_repo/epel
+    - role: mafalb.package_repo/elrepo
   tasks:
-    - name: we can install something from epel
+    - name: we can install something from elrepo
       package:
-        name: epel-rpm-macros.noarch
+        name: kmod-cciss
         state: present
 ...

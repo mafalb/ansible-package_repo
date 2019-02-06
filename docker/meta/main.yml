@@ -2,7 +2,7 @@
 ---
 
 galaxy_info:
-  role_name: mafalb.package_repo
+  role_name: mafalb.package_repo/docker
   author: Markus Falb
   description: An ansible role for package repositories (yum, apt, ...)
 
@@ -39,12 +39,14 @@ galaxy_info:
   # https://galaxy.ansible.com/api/v1/platforms/
   #
   platforms:
-  - name: EL
+  - name: Ubuntu
     versions:
-     - 7
+     - xenial
 
-
-  galaxy_tags: []
+  galaxy_tags:
+    - docker
+    - yum
+    - repository
 
 dependencies: []
 ...

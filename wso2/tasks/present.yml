@@ -1,0 +1,17 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: assertions
+  assert:
+    that:
+      - ansible_os_family == 'RedHat'
+      - ansible_distribution_major_version in ["7"]
+
+- name: repo for wso2 does exist
+  yum_repository:
+    name: bintray--wso2-rpm
+    description: bintray--wso2-rpm
+    file: wso2
+    baseurl: https://dl.bintray.com/wso2/rpm
+    enabled: "{{ package_repo_is_enabled|default(true) }}"
+    gpgcheck: 0

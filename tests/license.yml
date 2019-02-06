@@ -7,7 +7,7 @@
       stat:
         path: "{{ ansible_env.CI_BUILD_DIR }}/LICENSE"
       register: _LICENSE
-    
+
     - name: "assert || LICENSE"
       assert:
         that:

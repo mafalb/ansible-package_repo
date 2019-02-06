@@ -12,7 +12,7 @@
     src: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
     dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
 
-- name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} is imported
+- name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} 352c64e5 is imported
   rpm_key:
     key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
     state: present
@@ -24,8 +24,8 @@
     file: epel
     metalink: "https://mirrors.fedoraproject.org/metalink?repo=epel-{{ ansible_distribution_major_version }}&arch=$basearch"
     failovermethod: priority
-    enabled: "{{ package_repo_is_enabled|default(true) }}"
-    gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
+    enabled: "{{ package_repo_is_enabled.epel.epel|default(true) }}"
+    gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
 
 - name: repo for EPEL Debuginfo does exist
@@ -36,7 +36,7 @@
     metalink: "https://mirrors.fedoraproject.org/metalink?repo=epel-debug-{{ ansible_distribution_major_version }}&arch=$basearch"
     failovermethod: priority
     enabled: false
-    gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
+    gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
 
 - name: repo for EPEL Sources does exist
@@ -47,5 +47,5 @@
     metalink: "https://mirrors.fedoraproject.org/metalink?repo=epel-source-{{ ansible_distribution_major_version }}&arch=$basearch"
     failovermethod: priority
     enabled: false
-    gpgcheck: "{{ package_repo_gpgcheck|default(true) }}"
+    gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
