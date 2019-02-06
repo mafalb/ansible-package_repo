@@ -12,4 +12,9 @@
 - hosts: elasticsearch
   roles:
     - role: mafalb.package_repo/elasticsearch
+  tasks:
+    - name: we can install something
+      package:
+        name: heartbeat-elastic
+        state: present
 ...
