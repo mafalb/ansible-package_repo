@@ -32,6 +32,22 @@
       ansible_ci_test_name: elasticsearch
       ansible_ci_node_type: docker
       ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql55
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql56
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql57
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql80
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
 
 - hosts: wso2
   roles:
@@ -66,5 +82,10 @@
 - hosts: elasticsearch
   roles:
     - role: mafalb.package_repo/elasticsearch
+      package_repo_state: absent
+
+- hosts: mysql55,mysql56,mysql57,mysql80
+  roles:
+    - role: mafalb.package_repo/mysql
       package_repo_state: absent
 ...
