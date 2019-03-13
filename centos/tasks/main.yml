@@ -1,0 +1,50 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: assertions
+  assert:
+    that:
+      - ansible_os_family == 'RedHat'
+      - ansible_distribution_major_version in ["7"]
+
+- name: assert that enabled repos are valid
+  with_items: "{{ package_repo.enabled_repos }}"
+  assert:
+    that:
+      - item in package_repo.valid_repos
+
+- name: CentOS-Base.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-Base.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-Base.repo
+    backup: true
+
+- name: CentOS-Vault.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-Vault.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-Vault.repo
+    backup: true
+
+- name: CentOS-Sources.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-Sources.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-Base.repo
+    backup: true
+
+- name: CentOS-fasttrack.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-fasttrack.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-fasttrack.repo
+    backup: true
+
+- name: CentOS-Debuginfo.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-Debuginfo.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-Debuginfo.repo
+    backup: true
+
+- name: CentOS-CR.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-CR.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-CR.repo
+    backup: true

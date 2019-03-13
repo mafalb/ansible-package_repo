@@ -1,0 +1,8 @@
+---
+package_repo:
+  state: "{{ package_repo_state|default('present') }}"
+  enabled_repos:
+    - base
+    - updates
+    - extras
+...
