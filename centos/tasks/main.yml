@@ -13,6 +13,34 @@
     that:
       - item in package_repo.valid_repos
 
+- name: CentOS Virtualization key does exist
+  when: "'C7.4.1708-ovirt-4.1-centos-qemu-ev' in package_repo.enabled_repos"
+  block: 
+    - name: rpm key does exist
+      copy:
+        src: RPM-GPG-KEY-CentOS-SIG-Virtualization
+        dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
+
+    - name: rpm key is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
+        state: present
+
+- name: CentOS Storage SIG key does exist
+  when: "'C7.4.1708-gluster38' in package_repo.enabled_repos"
+  block:
+    - name: rpm key does exist
+      copy:
+        src: RPM-GPG-KEY-CentOS-SIG-Storage
+        dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+
+    - name: rpm key is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+        state: present
+    
 - name: CentOS-Base.repo
   template:
     src: "{{ ansible_distribution_major_version }}/CentOS-Base.repo.j2"
@@ -28,7 +56,7 @@
 - name: CentOS-Sources.repo
   template:
     src: "{{ ansible_distribution_major_version }}/CentOS-Sources.repo.j2"
-    dest: /etc/yum.repos.d/CentOS-Base.repo
+    dest: /etc/yum.repos.d/CentOS-Sources.repo
     backup: true
 
 - name: CentOS-fasttrack.repo

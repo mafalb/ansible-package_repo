@@ -14,12 +14,12 @@
 name=CentOS-$releasever - Base Sources
 baseurl=http://vault.centos.org/centos/$releasever/os/Source/
 gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 {% if "base-source" in package_repo.enabled_repos %}
 enabled=1
 {% else %}
 enabled=0
 {% endif %}
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 
 #released updates 
@@ -27,12 +27,12 @@ enabled=0
 name=CentOS-$releasever - Updates Sources
 baseurl=http://vault.centos.org/centos/$releasever/updates/Source/
 gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 {% if "updates-source" in package_repo.enabled_repos %}
 enabled=1
 {% else %}
 enabled=0
 {% endif %}
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 
 #additional packages that may be useful

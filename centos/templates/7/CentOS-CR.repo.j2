@@ -24,10 +24,10 @@
 name=CentOS-$releasever - cr
 baseurl=http://mirror.centos.org/centos/$releasever/cr/$basearch/
 gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 {% if "cr" in package_repo.enabled_repos %}
 enabled=1
 {% else %}
 enabled=0
 {% endif %}
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 

@@ -1,7 +1,6 @@
 ---
-
 package_repo:
-  enabled_repos:
+  valid_repos:
     - ovirt-4.1-epel
     - ovirt-4.1-centos-gluster38
     - ovirt-4.1-patternfly1-noarch-epel
@@ -10,4 +9,4 @@ package_repo:
     - centos-opstools-release
     - sac-gdeploy
     - ovirt-4.1-centos-qemu-ev
-    - ovirt-4.1
+...

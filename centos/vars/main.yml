@@ -1,11 +1,4 @@
 package_repo:
-  _valid_versions:
-    - 7.0.1406
-    - 7.1.1503
-    - 7.2.1511
-    - 7.3.1611
-    - 7.4.1708
-    - 7.5.1804
   valid_repos:
     - base
     - updates
@@ -49,3 +42,7 @@ package_repo:
     - C7.5.1804-extras
     - C7.5.1804-centosplus
     - C7.5.1804-fasttrack
+    - C7.4.1708-gluster38
+    - C7.4.1708-ovirt41
+    - C7.4.1708-opstools-release
+    - C7.4.1708-ovirt-4.1-centos-qemu-ev

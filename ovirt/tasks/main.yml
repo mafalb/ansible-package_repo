@@ -6,7 +6,17 @@
     - never
     - debug
 
+- debug: msg="{{ ovirt.version|replace('.','') }}"
+  tags:
+    - never
+    - debug
+
 - debug: var=role_path
+  tags:
+    - never
+    - debug
+
+- debug: var=package_repo
   tags:
     - never
     - debug
@@ -20,54 +30,90 @@
       - "(role_path + '/files/RPM-GPG-ovirt-' + ovirt.version|string) is file"
 
 - name: rpm gpg key does exist
-  copy:
-    src: RPM-GPG-ovirt-{{ ovirt.version }}
-    dest: /etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}
+  block:
+    - name: rpm gpg key does exist
+      copy:
+        src: RPM-GPG-ovirt-{{ ovirt.version }}
+        dest: /etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}
 
-- name: rpm gpg key is imported
-  rpm_key:
-    key: /etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}
-    state: present
+    - name: rpm gpg key is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}
+        state: present
+  when: "'ovirt-4.1' in package_repo.enabled_repos"
 
-- name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} does exist
-  copy:
-    src: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
-    dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+- name: EPELs key does exist
+  block:
+    - name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} does exist
+      copy:
+        src: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+        dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
 
-- name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} is imported
-  rpm_key:
-    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
-    state: present
+    - name: RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }} is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+        state: present
+  when: "'ovirt-4.1-epel' in package_repo.enabled_repos"
 
-- name: RPM-GPG-KEY-CentOS-SIG-Storage does exist
-  copy:
-    src: RPM-GPG-KEY-CentOS-SIG-Storage
-    dest: /etc/pki/rpm-gpg/
+- name: CentOS Storage Sig key does exist
+  block:
+    - name: RPM-GPG-KEY-CentOS-SIG-Storage does exist
+      copy:
+        src: RPM-GPG-KEY-CentOS-SIG-Storage
+        dest: /etc/pki/rpm-gpg/
 
-- name: RPM-GPG-KEY-CentOS-SIG-Storage E451E5B5 is imported
-  rpm_key:
-    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
-    state: present
+    - name: RPM-GPG-KEY-CentOS-SIG-Storage E451E5B5 is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+        state: present
+  when: "'ovirt-4.1-centos-gluster38' in package_repo.enabled_repos"
 
 - name: RPM-GPG-KEY-CentOS-SIG-OpsTools does exist
-  copy:
-    src: RPM-GPG-KEY-CentOS-SIG-OpsTools
-    dest: /etc/pki/rpm-gpg/
+  block:
+    - name: RPM-GPG-KEY-CentOS-SIG-OpsTools does exist
+      copy:
+        src: RPM-GPG-KEY-CentOS-SIG-OpsTools
+        dest: /etc/pki/rpm-gpg/
 
-- name: RPM-GPG-KEY-CentOS-SIG-OpsTools 51bc2a13 is imported
-  rpm_key:
-    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-OpsTools
-    state: present
+    - name: RPM-GPG-KEY-CentOS-SIG-OpsTools 51bc2a13 is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-OpsTools
+        state: present
+  when: "'centos-opstools-release' in package_repo.enabled_repos"
+
+- name: RPM-GPG-KEY-gdeploy does exist
+  block:
+    - name: RPM-GPG-KEY-gdeploy is present
+      copy:
+        src: RPM-GPG-KEY-gdeploy
+        dest: /etc/pki/rpm-gpg/
+
+    - name: RPM-GPG-KEY-gdeploy 61E8806C is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-gdeploy
+        state: present
+  when: "'sac-gdeploy' in package_repo.enabled_repos"
 
 - name: RPM-GPG-KEY-CentOS-SIG-Virtualization does exist
-  copy:
-    src: RPM-GPG-KEY-CentOS-SIG-Virtualization
-    dest: /etc/pki/rpm-gpg/
+  block:
+    - name: RPM-GPG-KEY-CentOS-SIG-Virtualization is present
+      copy:
+        src: RPM-GPG-KEY-CentOS-SIG-Virtualization
+        dest: /etc/pki/rpm-gpg/
 
-- name: RPM-GPG-KEY-CentOS-SIG-Virtualization 61E8806C is imported
-  rpm_key:
-    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
-    state: present
+    - name: RPM-GPG-KEY-CentOS-SIG-Virtualization 61E8806C is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
+        state: present
+  when:
+    - ("'ovirt-4.1-centos-qemu-ev' in package_repo.enabled_repos") or
+      ("'ovirt-centos-ovirt41' in package_repo.enabled_repos")
 
 - name: RPM-GPG-KEY-CentOS-SIG-SCLo does exist
   copy:
@@ -75,11 +121,24 @@
     dest: /etc/pki/rpm-gpg/
 
 - name: RPM-GPG-KEY-CentOS-SIG-SCLo F2EE9D55 is imported
+  ignore_errors: "{{ ansible_check_mode }}"
   rpm_key:
     key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo
     state: present
 
 - name: ovirt-release is present
   package:
-    name: http://resources.ovirt.org/pub/yum-repo/ovirt-release{{ ovirt.version|replace('.','') }}.rpm
+    name: ovirt-release{{ ovirt.version|replace('.','') }}
     state: present
+
+- name: ovirt repo is configured
+  template:
+    src: ovirt-{{ ovirt.version }}.repo.j2
+    dest: /etc/yum.repos.d/ovirt-{{ ovirt.version }}.repo
+    backup: true
+
+- name: ovirt dependency repos are configured
+  template:
+    src: ovirt-{{ ovirt.version }}-dependencies.repo.j2
+    dest: /etc/yum.repos.d/ovirt-{{ ovirt.version }}-dependencies.repo
+    backup: true
