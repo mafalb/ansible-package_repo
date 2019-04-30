@@ -27,6 +27,7 @@
       - ansible_os_family == 'RedHat'
       - ansible_distribution_major_version in ["7"]
       - ovirt.version is defined
+      - ovirt.version in [4.1, 4.2]
       - "(role_path + '/files/RPM-GPG-ovirt-' + ovirt.version|string) is file"
 
 - name: rpm gpg key does exist
@@ -41,7 +42,6 @@
       rpm_key:
         key: /etc/pki/rpm-gpg/RPM-GPG-ovirt-{{ ovirt.version }}
         state: present
-  when: "'ovirt-4.1' in package_repo.enabled_repos"
 
 - name: EPELs key does exist
   block:
@@ -55,7 +55,6 @@
       rpm_key:
         key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
         state: present
-  when: "'ovirt-4.1-epel' in package_repo.enabled_repos"
 
 - name: CentOS Storage Sig key does exist
   block:
@@ -69,7 +68,6 @@
       rpm_key:
         key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
         state: present
-  when: "'ovirt-4.1-centos-gluster38' in package_repo.enabled_repos"
 
 - name: RPM-GPG-KEY-CentOS-SIG-OpsTools does exist
   block:
@@ -83,7 +81,6 @@
       rpm_key:
         key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-OpsTools
         state: present
-  when: "'centos-opstools-release' in package_repo.enabled_repos"
 
 - name: RPM-GPG-KEY-gdeploy does exist
   block:
@@ -97,7 +94,6 @@
       rpm_key:
         key: /etc/pki/rpm-gpg/RPM-GPG-KEY-gdeploy
         state: present
-  when: "'sac-gdeploy' in package_repo.enabled_repos"
 
 - name: RPM-GPG-KEY-CentOS-SIG-Virtualization does exist
   block:
@@ -111,9 +107,6 @@
       rpm_key:
         key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
         state: present
-  when:
-    - ("'ovirt-4.1-centos-qemu-ev' in package_repo.enabled_repos") or
-      ("'ovirt-centos-ovirt41' in package_repo.enabled_repos")
 
 - name: RPM-GPG-KEY-CentOS-SIG-SCLo does exist
   copy:
@@ -132,13 +125,15 @@
     state: present
 
 - name: ovirt repo is configured
+  when: "{{ ovirt.version is version('4.1','=') }}"
   template:
-    src: ovirt-{{ ovirt.version }}.repo.j2
+    src: ovirt.repo.j2
     dest: /etc/yum.repos.d/ovirt-{{ ovirt.version }}.repo
     backup: true
 
 - name: ovirt dependency repos are configured
+  when: "{{ ovirt.version is version('4.1','=') }}"
   template:
-    src: ovirt-{{ ovirt.version }}-dependencies.repo.j2
+    src: ovirt-dependencies.repo.j2
     dest: /etc/yum.repos.d/ovirt-{{ ovirt.version }}-dependencies.repo
     backup: true

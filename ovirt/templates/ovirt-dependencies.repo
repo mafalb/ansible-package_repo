@@ -1,54 +1,60 @@
-[ovirt-4.1-epel]
+[ovirt-{{ ovirt.version }}-epel]
 name=Extra Packages for Enterprise Linux 7 - $basearch
 #baseurl=http://download.fedoraproject.org/pub/epel/7/$basearch
 mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
 failovermethod=priority
-{%  if "ovirt-4.1-epel" in package_repo.enabled_repos %}
+{%  if "ovirt-epel" in package_repo.enabled_repos %}
 enabled=1
 {% else %}
 enabled=0
 {% endif %}
-includepkgs=epel-release,python-uinput,puppet,python-lockfile,python-cpopen,python-ordereddict,python-pthreading,python-inotify,python-argparse,novnc,python-ply,python-kitchen,python-daemon,python-websockify,livecd-tools,spice-html5,mom,python-IPy,python-ioprocess,ioprocess,safelease,python-paramiko,python2-paramiko,python2-crypto,libtomcrypt,libtommath,python-cheetah,python-ecdsa,python2-ecdsa,python-markdown,rubygem-rgen,ovirt-guest-agent*,userspace-rcu,protobuf-java,objenesis,python34*,hystrix-core,archaius-core,rxjava,jctools,hystrix-metrics-event-stream,jackson-core,python-simplejson
+includepkgs={{ ovirt.epel_packages.ovirt[ovirt.version|replace(".","")]|join(",") }}
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
 
-[ovirt-4.1-centos-gluster38]
-name=CentOS-7 - Gluster 3.8
-baseurl=http://mirror.centos.org/centos/7/storage/$basearch/gluster-3.8/
+[ovirt-{{ ovirt.version }}-centos-gluster{{ ovirt.gluster_version[ovirt.version|replace(".","")] }}
+name=CentOS-7 - Gluster {{ ovirt.gluster_version[ovirt.version|replace(".","")] }}
+baseurl=http://mirror.centos.org/centos/7/storage/$basearch/gluster-{{ ovirt.gluster_version[ovirt.version|replace(".","")] }}/
 gpgcheck=1
-{%  if "ovirt-4.1-centos-gluster38" in package_repo.enabled_repos %}
+{%  if "ovirt-centos-gluster" in package_repo.enabled_repos %}
 enabled=1
 {% else %}
 enabled=0
 {% endif %}
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
 
-[ovirt-4.1-patternfly1-noarch-epel]
+{% if ovirt.version is version("4.1","=") %}
+[ovirt-{{ ovirt.version }}-patternfly1-noarch-epel]
 name=Copr repo for patternfly1 owned by patternfly
 baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-7-$basearch/
-{%  if "ovirt-4.1-patternfly1-noarch-epel" in package_repo.enabled_repos %}
+{%  if "ovirt-patternfly1-noarch-epel" in package_repo.enabled_repos %}
 enabled=1
 {% else %}
 enabled=0
 {% endif %}
 gpgcheck=0
+{% endif %}
 
 [virtio-win-stable]
 name=virtio-win builds roughly matching what was shipped in latest RHEL
+{% if ovirt.version == "4.1" %}
 baseurl=http://fedorapeople.org/groups/virt/virtio-win/repo/stable
-{%  if "virtio-win-stable" in package_repo.enabled_repos %}
+{% elif ovirt.version == "4.2" %}
+baseurl=http://fedorapeople.org/groups/virt/virtio-win/repo/latest
+{% endif %}
+{%  if "virtio-win" in package_repo.enabled_repos %}
 enabled=1
 {% else %}
 enabled=0
 {% endif %}
 gpgcheck=0
 
-[ovirt-centos-ovirt41]
-name=CentOS-7 - oVirt 4.1
-baseurl=http://mirror.centos.org/centos/7/virt/$basearch/ovirt-4.1/
+[ovirt-centos-ovirt{{ ovirt.version|replace(".",""]
+name=CentOS-7 - oVirt {{ ovirt.version }}
+baseurl=http://mirror.centos.org/centos/7/virt/$basearch/ovirt-{{ ovirt.version }}/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
-{%  if 'ovirt-centos-ovirt41' in package_repo.enabled_repos %}
+{%  if 'ovirt-centos-ovirt' in package_repo.enabled_repos %}
 enabled=1
 {% else %}
 enabled=0
@@ -65,6 +71,7 @@ enabled=1
 enabled=0
 {% endif %}
 
+{% if ovirt.version == "4.1" %}
 [sac-gdeploy]
 name=Copr repo for gdeploy owned by sac
 baseurl=https://copr-be.cloud.fedoraproject.org/results/sac/gdeploy/epel-7-$basearch/
@@ -78,15 +85,26 @@ enabled=1
 enabled=0
 {% endif %}
 enabled_metadata=1
+{% endif %}
 
-[ovirt-4.1-centos-qemu-ev]
+[ovirt-{{ ovirt.version }}-centos-qemu-ev]
 name=CentOS-7 - QEMU EV
 baseurl=http://mirror.centos.org/centos/7/virt/$basearch/kvm-common/
 gpgcheck=1
-{%  if 'ovirt-4.1-centos-qemu-ev' in package_repo.enabled_repos %}
+{%  if 'ovirt-centos-qemu-ev' in package_repo.enabled_repos %}
 enabled=1
 {% else %}
 enabled=0
 {% endif %}
 gpgkey=file:///etc/pki/RPM-GPG-KEY-CentOS-SIG-Virtualization
 
+[ovirt-4.2-centos-ovirt{{ ovirt.version|replace(".","") }}]
+name=CentOS-7 - oVirt {{ ovirt.version }}
+baseurl=http://mirror.centos.org/centos/7/virt/$basearch/ovirt-{{ ovirt.version }}
+gpgcheck=1
+{%  if 'ovirt-centos-ovirt' in package_repo.enabled_repos %}
+enabled=1
+{% else %}
+enabled=0
+{% endif %}
+gpgkey=file:///etc/pki/RPM-GPG-KEY-CentOS-SIG-Virtualization

@@ -1,12 +1,83 @@
+# vim: set ft=yaml ts=2 expandtab:
 ---
 package_repo:
   valid_repos:
-    - ovirt-4.1-epel
-    - ovirt-4.1-centos-gluster38
-    - ovirt-4.1-patternfly1-noarch-epel
+    - ovirt-{{ ovirt.version }}-epel
+    - ovirt-{{ ovirt.version }}-centos-gluster{{ ovirt.gluster_version[ovirt.version] }}
+    - ovirt-{{ ovirt.version }}-patternfly1-noarch-epel
     - virtio-win-stable
-    - ovirt-centos-ovirt41
+    - ovirt-centos-ovirt{{ ovirt.version|replace('.','') }}
     - centos-opstools-release
     - sac-gdeploy
-    - ovirt-4.1-centos-qemu-ev
+    - ovirt-{{ ovirt.version }}-centos-qemu-ev
+ovirt:
+  epel_packages:
+    ovirt41:
+      - epel-release
+      - python-uinput
+      - puppet
+      - python-lockfile
+      - python-cpopen
+      - python-ordereddict
+      - python-pthreading
+      - python-inotify
+      - python-argparse
+      - novnc
+      - python-ply
+      - python-kitchen
+      - python-daemon
+      - python-websockify
+      - livecd-tools
+      - spice-html5
+      - mom
+      - python-IPy
+      - python-ioprocess
+      - ioprocess
+      - safelease
+      - python-paramiko
+      - python2-paramiko
+      - python2-crypto
+      - libtomcrypt
+      - libtommath
+      - python-cheetah
+      - python-ecdsa
+      - python2-ecdsa
+      - python-markdown
+      - rubygem-rgen
+      - ovirt-guest-agent*
+      - userspace-rcu
+      - protobuf-java
+      - objenesis
+      - python34*
+      - hystrix-core
+      - archaius-core
+      - rxjava
+      - jctools
+      - hystrix-metrics-event-stream
+      - jackson-core
+      - python-simplejson
+    ovirt42:
+      -  ansible
+      -  ansible-doc
+      -  epel-release
+      -  facter
+      -  hiera
+      -  libtomcrypt
+      -  libtommath
+      -  nbdkit
+      -  nbdkit-devel
+      -  nbdkit-plugin-python2
+      -  nbdkit-plugin-python-common
+      -  nbdkit-plugin-vddk
+      -  ovirt-guest-agent*
+      -  puppet
+      -  python2-crypto
+      -  python2-ecdsa
+      -  python-ordereddict
+      -  ruby-augeas
+      -  rubygem-rgen
+      -  ruby-shadow
+  gluster_version:
+    ovirt41: 3.8
+    ovirt42: 3.12
 ...

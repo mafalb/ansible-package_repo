@@ -40,7 +40,21 @@
       rpm_key:
         key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
         state: present
+
+- name: CentOS OpsTools SIG key does exist
+  when: "'C7.4.1708-opstools-release' in package_repo.enabled_repos"
+  block:
+    - name: rpm key does exist
+      copy:
+        src: RPM-GPG-KEY-CentOS-SIG-OpsTools
+        dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-OpsTools
     
+    - name: rpm key is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-OpsTools
+        state: present
+
 - name: CentOS-Base.repo
   template:
     src: "{{ ansible_distribution_major_version }}/CentOS-Base.repo.j2"
