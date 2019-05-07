@@ -27,7 +27,7 @@
       - ansible_os_family == 'RedHat'
       - ansible_distribution_major_version in ["7"]
       - ovirt.version is defined
-      - ovirt.version in [4.1, 4.2]
+      - ovirt.version in ['4.1', '4.2']
       - "(role_path + '/files/RPM-GPG-ovirt-' + ovirt.version|string) is file"
 
 - name: rpm gpg key does exist
@@ -125,14 +125,24 @@
     state: present
 
 - name: ovirt repo is configured
-  when: "{{ ovirt.version is version('4.1','=') }}"
+  when: ovirt.version is version('4.1','==')
   template:
     src: ovirt.repo.j2
     dest: /etc/yum.repos.d/ovirt-{{ ovirt.version }}.repo
     backup: true
 
+- debug: var=ovirt.epel_packages['ovirt'+ovirt.version|replace(".","")]|join(",")
+  tags:
+    - never
+    - debug
+
+- debug: var=ovirt.gluster_version['ovirt'+ovirt.version|replace(".","")]
+  tags:
+    - never
+    - debug
+
 - name: ovirt dependency repos are configured
-  when: "{{ ovirt.version is version('4.1','=') }}"
+  when: ovirt.version is version('4.1','==')
   template:
     src: ovirt-dependencies.repo.j2
     dest: /etc/yum.repos.d/ovirt-{{ ovirt.version }}-dependencies.repo

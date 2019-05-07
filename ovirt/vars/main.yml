@@ -78,6 +78,6 @@ ovirt:
       -  rubygem-rgen
       -  ruby-shadow
   gluster_version:
-    ovirt41: 3.8
-    ovirt42: 3.12
+    ovirt41: '3.8'
+    ovirt42: '3.12'
 ...
