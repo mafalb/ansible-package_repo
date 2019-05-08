@@ -121,7 +121,7 @@
 
 - name: ovirt-release is present
   package:
-    name: ovirt-release{{ ovirt.version|replace('.','') }}
+    name: https://resources.ovirt.org/pub/yum-repo/ovirt-release{{ ovirt.version|replace('.','') }}.rpm
     state: present
 
 - name: ovirt repo is configured
