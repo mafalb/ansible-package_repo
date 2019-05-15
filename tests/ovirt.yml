@@ -11,7 +11,7 @@
 - hosts: ovirt
   vars:
     ovirt:
-      version: 4.2
+      version: '4.2'
   roles:
     - role: mafalb.package_repo/ovirt
 ...
