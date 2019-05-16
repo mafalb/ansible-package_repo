@@ -1,0 +1,22 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: rpm key is present
+  copy:
+    src: RPM-GPG-KEY-webmin
+    dest: /etc/pki/rpm-gpg/
+
+- name: rpm key is imported
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
+    state: present
+
+- name: repo does exist
+  yum_repository:
+    name: webmin
+    description: Webmin Distribution Neutral
+    file: webmin
+    mirrorlist: https://download.webmin.com/download/yum/mirrorlist
+    enabled: true
+    gpgcheck: true
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
