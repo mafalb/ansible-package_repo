@@ -1,0 +1,38 @@
+[ovirt-{{ ovirt.version }}-epel]
+name=Extra Packages for Enterprise Linux 7 - $basearch
+#baseurl=http://download.fedoraproject.org/pub/epel/7/$basearch
+mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
+failovermethod=priority
+enabled=1
+includepkgs={{ ovirt.epel_packages['ovirt'+ovirt.version|replace(".","")]|join(",") }}
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+
+{% if ovirt.version is version('4.1','==') %}
+[ovirt-{{ ovirt.version }}-patternfly1-noarch-epel]
+name=Copr repo for patternfly1 owned by patternfly
+baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-7-$basearch/
+enabled=1
+gpgcheck=0
+{% endif %}
+
+[virtio-win-stable]
+name=virtio-win builds roughly matching what was shipped in latest RHEL
+{% if ovirt.version is version('4.1', '==') %}
+baseurl=http://fedorapeople.org/groups/virt/virtio-win/repo/stable
+{% elif ovirt.version is version('4.2', '==') %}
+baseurl=http://fedorapeople.org/groups/virt/virtio-win/repo/latest
+{% endif %}
+enabled=1
+gpgcheck=0
+
+[sac-gdeploy]
+name=Copr repo for gdeploy owned by sac
+baseurl=https://copr-be.cloud.fedoraproject.org/results/sac/gdeploy/epel-7-$basearch/
+type=rpm-md
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-gdeploy
+repo_gpgcheck=0
+enabled=1
+enabled_metadata=1
+
