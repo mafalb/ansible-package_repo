@@ -27,7 +27,7 @@
       - ansible_os_family == 'RedHat'
       - ansible_distribution_major_version in ["7"]
       - ovirt.version is defined
-      - ovirt.version in ['4.1', '4.2']
+      - ovirt.version in ['4.1', '4.2', '4.3']
       - "(role_path + '/files/RPM-GPG-ovirt-' + ovirt.version|string) is file"
 
 - name: rpm gpg key does exist
