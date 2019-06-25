@@ -1,0 +1,17 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: remove old ovirt release package
+  package:
+    name: ovirt-release{{ ovirt.version|replace(".","") }}
+    state: absent
+
+- name: remove old yum repo files
+  loop:
+    - ovirt-{{ ovirt.version }}.repo
+    - ovirt-{{ ovirt.version }}-dependencies.repo
+  file:
+    name: "{{ item }}"
+    state: absent
+
+...
