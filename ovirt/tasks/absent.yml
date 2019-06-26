@@ -6,12 +6,24 @@
     name: ovirt-release{{ ovirt.version|replace(".","") }}
     state: absent
 
-- name: remove old yum repo files
-  loop:
-    - ovirt-{{ ovirt.version }}.repo
-    - ovirt-{{ ovirt.version }}-dependencies.repo
-  file:
-    name: "{{ item }}"
-    state: absent
+- name: remove old yum repos
+  block:
+
+    - name: empty old yum repo files
+      loop:
+        - ovirt-{{ ovirt.version }}.repo
+        - ovirt-{{ ovirt.version }}-dependencies.repo
+      copy:
+        content: '# remove me'
+        dest: "/etc/yum.repos.d/{{ item }}"
+        backup: true
+    
+    - name: remove old yum repo files
+      loop:
+        - ovirt-{{ ovirt.version }}.repo
+        - ovirt-{{ ovirt.version }}-dependencies.repo
+      file:
+        name: "/etc/yum.repos.d/{{ item }}"
+        state: absent
 
 ...
