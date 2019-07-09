@@ -1,0 +1,54 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: assertions
+  assert:
+    that:
+      - ansible_os_family == 'RedHat'
+      - ansible_distribution_major_version in ["7"]
+
+- name: release package is absent
+  package:
+    name: rpmfusion-free-release
+    state: absent
+
+- name: pgp key for rpmfusion does exist (in filesystem)
+  copy:
+    src: RPM-GPG-KEY-rpmfusion-free-el-{{ ansible_distribution_major_version }}
+    dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-el-{{ ansible_distribution_major_version }}
+
+- name: rpm key for rpmfusion is present (in rpmdb)
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-el-{{ ansible_distribution_major_version }}
+    state: present
+
+- name: main repo does exist
+  yum_repository:
+    name: rpmfusion-free-updates
+    description: RPM Fusion for EL {{ ansible_distribution_major_version }} - Free - Updates
+    file: rpmfusion-free-updates
+    mirrorlist: http://mirrors.rpmfusion.org/mirrorlist?repo=free-el-updates-released-{{ ansible_distribution_major_version }}&arch=$basearch
+    enabled: "{{ package_repo_is_enabled.rpmfusion.rpmfusion|default(true) }}"
+    gpgcheck: "{{ package_repo_gpgcheck.rpmfusion.main|default(true) }}"
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-el-{{ ansible_distribution_major_version }}"
+
+- name: debuginfo repo does exist
+  yum_repository:
+    name: rpmfusion-free-updates-debuginfo
+    description: RPM Fusion for EL {{ ansible_distribution_major_version }} - Free - Updates Debug
+    file: rpmfusion-free-updates
+    mirrorlist: http://mirrors.rpmfusion.org/mirrorlist?repo=free-el-updates-released-debug-{{ ansible_distribution_major_version }}&arch=$basearch
+    enabled: "{{ package_repo_is_enabled.rpmfusion.debuginfo|default(false) }}"
+    gpgcheck: "{{ package_repo_gpgcheck.rpmfusion.debuginfo|default(true) }}"
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-el-{{ ansible_distribution_major_version }}"
+
+- name: source repo does exist
+  yum_repository:
+    name: rpmfusion-free-updates-source
+    description: RPM Fusion for EL {{ ansible_distribution_major_version }} - Free - Updates Source
+    file: rpmfusion-free-updates
+    mirrorlist: http://mirrors.rpmfusion.org/mirrorlist?repo=free-el-updates-released-source-{{ ansible_distribution_major_version }}&arch=$basearch
+    enabled: "{{ package_repo_is_enabled.rpmfusion.source|default(false) }}"
+    gpgcheck: "{{ package_repo_gpgcheck.rpmfusion.source|default(true) }}"
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-el-{{ ansible_distribution_major_version }}"
+...

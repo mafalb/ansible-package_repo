@@ -1,0 +1,21 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: assertions
+  assert:
+    that:
+      - ansible_os_family == 'RedHat'
+      - ansible_distribution_major_version in ["7"]
+
+- name: repo for EPEL is absent
+  file:
+    path: /etc/yum.repos.d/epel.repo
+    state: absent
+
+- name: epel-release and dependents are absent
+  package:
+    name:
+      - rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}
+      - rpmfusion-free-release-{{ ansible_distribution_major_version }}
+      - epel-release
+    state: absent

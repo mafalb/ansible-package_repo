@@ -1,0 +1,9 @@
+---
+
+package_repo:
+  state: "{{ package_repo_state|default('present') }}"
+package_repo_is_enabled:
+  epel:
+    epel: true
+    debuginfo: false
+    source: false

@@ -1,0 +1,91 @@
+# vim: set ft=yaml ts=2:
+---
+- hosts: cihost
+  vars_files:
+    - vars/main.yml
+  roles:
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: wso2
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: epel
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: elrepo
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: zabbix
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: rpmfusion
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: docker
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: ubuntu16
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: elasticsearch
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql55
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql56
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql57
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql80
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+
+- hosts: wso2
+  roles:
+    - role: mafalb.package_repo/wso2
+      package_repo_state: absent
+
+- hosts: epel
+  roles:
+    - role: mafalb.package_repo/epel
+      package_repo_state: absent
+
+- hosts: elrepo
+  roles:
+    - role: mafalb.package_repo/elrepo
+      package_repo_state: absent
+
+- hosts: zabbix
+  roles:
+    - role: mafalb.package_repo/zabbix
+      package_repo_state: absent
+
+- hosts: rpmfusion
+  roles:
+    - role: mafalb.package_repo/rpmfusion
+      package_repo_state: absent
+
+- hosts: docker
+  roles:
+    - role: mafalb.package_repo/docker
+      package_repo_state: absent
+
+- hosts: elasticsearch
+  roles:
+    - role: mafalb.package_repo/elasticsearch
+      package_repo_state: absent
+
+- hosts: mysql55,mysql56,mysql57,mysql80
+  roles:
+    - role: mafalb.package_repo/mysql
+      package_repo_state: absent
+...

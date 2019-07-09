@@ -1,0 +1,7 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: repo for elasticsearch is absent
+  file:
+    path: /etc/yum.repos.d/elasticsearch.repo
+    state: absent

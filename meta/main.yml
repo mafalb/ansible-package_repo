@@ -1,8 +1,7 @@
 # vim: set ft=yaml ts=2:
 ---
-
 galaxy_info:
-  role_name: package_repos
+  role_name: mafalb.package_repo
   author: Markus Falb
   description: An ansible role for package repositories (yum, apt, ...)
 
@@ -38,7 +37,10 @@ galaxy_info:
   # To view available platforms and versions (or releases), visit:
   # https://galaxy.ansible.com/api/v1/platforms/
   #
-  platforms: []
+  platforms:
+  - name: EL
+    versions:
+     - 7
 
   galaxy_tags: []
 

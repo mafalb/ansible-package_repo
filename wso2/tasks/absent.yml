@@ -1,0 +1,7 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: repo for wso2 is absent
+  file:
+    path: /etc/yum.repos.d/wso2.repo
+    state: absent

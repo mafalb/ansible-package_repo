@@ -1,0 +1,13 @@
+---
+package_repo:
+  enabled_repos:
+    - ovirt-epel
+    - ovirt-centos-gluster
+    - virtio-win
+    - ovirt-centos-ovirt
+    - centos-opstools-release
+    - ovirt-centos-qemu-ev
+    - ovirt
+    - ovirt-patternfly1-noarch-epel
+    - sac-gdeploy
+...

@@ -10,6 +10,7 @@ env:
     - ANSIBLE_FORCE_COLOR=1
   matrix:
     - targeted_ansible_version: 2.7
+    - targeted_ansible_version: 2.8
 
 before_install:
   - export ANSIBLE_CI_BRANCH=$TRAVIS_BRANCH CI_BUILD_DIR=$TRAVIS_BUILD_DIR
@@ -26,14 +27,16 @@ before_install:
 install:
   - ansible-playbook -b -D -t all,debug roles/mafalb.ansible_ci/install.yml
 script:
-  - ansible-lint --force-color -vv tests/epel.yml
+  - ansible-lint --force-color -vv tests/test.yml
 
-  - ansible-playbook -D -t all,debug tests/readme.yml
-  - ansible-playbook -D -t all,debug tests/license.yml
+  - ansible-playbook -D -t all,debug tests/test.yml
+  - ansible-playbook -D -t all,debug tests/test.yml | tee /tmp/idempotence.tee
+  - "! grep -E 'ok=.*changed=[^0].*unreachable=.*failed=' /tmp/idempotence.tee"
 
-  - ansible-playbook -D -t all,debug tests/epel.yml
-  - ansible-playbook -D -t all,debug tests/epel.yml | tee /tmp/idempotence.tee
+  - ansible-playbook -D -t all,debug tests/absent.yml
+  - ansible-playbook -D -t all,debug tests/absent.yml | tee /tmp/idempotence.tee
   - "! grep -E 'ok=.*changed=[^0].*unreachable=.*failed=' /tmp/idempotence.tee"
 
 after_script:
   - ls -lR
+  - ls -l $CI_BUILD_DIR/..

@@ -1,35 +1,16 @@
 # vim: set ft=yaml ts=2:
 ---
-
 - hosts: cihost
+  vars_files:
+    - vars/main.yml
   roles:
-    - role: mafalb.package_repo/tests
-  tasks:
-    - debug: var=package_repo
-      tags:
-        - never
-        - debug
-
-    - name: run container {{ item.container_name }}
-      include_role:
-        name: mafalb.ansible_ci/node/docker
-      with_items: "{{ package_repo.tests.epel.containers }}"
-      vars:
-            container_name: "{{ item.container_name }}"
-            volumes: "{{ item.volumes }}"
-            image_name: "{{ item.image_name }}"
-            src: "{{ item.src }}"
-            member_of_groups: "{{ item.member_of_groups }}"
-
-    - name: epel host group is not empty
-      assert:
-        that:
-        - groups['epel']
-
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: epel
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
 - hosts: epel
   roles:
-    - role: mafalb.package_repo
-      package_repo_name: epel
+    - role: mafalb.package_repo/epel
   tasks:
     - name: we can install something from epel
       package:

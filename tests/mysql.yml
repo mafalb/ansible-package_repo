@@ -1,0 +1,63 @@
+# vim: set ft=yaml ts=2:
+---
+- hosts: cihost
+  vars_files:
+    - vars/main.yml
+  roles:
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql55
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql56
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql57
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+    - role: mafalb.ansible_ci/node
+      ansible_ci_test_name: mysql80
+      ansible_ci_node_type: docker
+      ansible_ci_node_image_name: centos7
+
+- hosts: mysql55
+  roles:
+    - role: mafalb.package_repo/mysql
+      package_repo_version: 5.5
+  tasks:
+    - name: we can install something
+      package:
+        name: mysql-community-common
+        state: present
+
+- hosts: mysql56
+  roles:
+    - role: mafalb.package_repo/mysql
+      package_repo_version: 5.6
+  tasks:
+    - name: we can install something
+      package:
+        name: mysql-community-common
+        state: present
+
+- hosts: mysql57
+  roles:
+    - role: mafalb.package_repo/mysql
+      package_repo_version: 5.7
+  tasks:
+    - name: we can install something
+      package:
+        name: mysql-community-common
+        state: present
+
+- hosts: mysql80
+  roles:
+    - role: mafalb.package_repo/mysql
+      package_repo_version: 8.0
+  tasks:
+    - name: we can install something
+      package:
+        name: mysql-community-common
+        state: present
+...

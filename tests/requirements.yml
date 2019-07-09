@@ -1,8 +1,11 @@
 - name: mafalb.ansible_ci
   src: https://github.com/mafalb/ansible-ansible_ci
+  version: origin/master
 
 - name: mafalb.ansible
   src: https://github.com/mafalb/ansible-ansible
+  version: origin/master
 
 - name: mafalb.docker
   src: https://github.com/mafalb/ansible-docker
+  version: origin/master

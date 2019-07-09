@@ -7,7 +7,7 @@
       stat:
         path: "{{ ansible_env.CI_BUILD_DIR }}/README.md"
       register: _README
-    
+
     - name: "assert || README"
       assert:
         that:

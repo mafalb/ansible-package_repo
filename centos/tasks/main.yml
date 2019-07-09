@@ -1,0 +1,92 @@
+# vim: set ft=yaml ts=2:
+---
+
+- name: assertions
+  assert:
+    that:
+      - ansible_os_family == 'RedHat'
+      - ansible_distribution_major_version in ["7"]
+
+- name: assert that enabled repos are valid
+  with_items: "{{ package_repo.enabled_repos }}"
+  assert:
+    that:
+      - item in package_repo.valid_repos
+
+- name: CentOS Virtualization key does exist
+  when: "'C7.4.1708-ovirt-4.1-centos-qemu-ev' in package_repo.enabled_repos"
+  block: 
+    - name: rpm key does exist
+      copy:
+        src: RPM-GPG-KEY-CentOS-SIG-Virtualization
+        dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
+
+    - name: rpm key is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
+        state: present
+
+- name: CentOS Storage SIG key does exist
+  when: "'C7.4.1708-gluster38' in package_repo.enabled_repos"
+  block:
+    - name: rpm key does exist
+      copy:
+        src: RPM-GPG-KEY-CentOS-SIG-Storage
+        dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+
+    - name: rpm key is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+        state: present
+
+- name: CentOS OpsTools SIG key does exist
+  when: "'C7.4.1708-opstools-release' in package_repo.enabled_repos"
+  block:
+    - name: rpm key does exist
+      copy:
+        src: RPM-GPG-KEY-CentOS-SIG-OpsTools
+        dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-OpsTools
+    
+    - name: rpm key is imported
+      ignore_errors: "{{ ansible_check_mode }}"
+      rpm_key:
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-OpsTools
+        state: present
+
+- name: CentOS-Base.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-Base.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-Base.repo
+    backup: true
+
+- name: CentOS-Vault.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-Vault.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-Vault.repo
+    backup: true
+
+- name: CentOS-Sources.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-Sources.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-Sources.repo
+    backup: true
+
+- name: CentOS-fasttrack.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-fasttrack.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-fasttrack.repo
+    backup: true
+
+- name: CentOS-Debuginfo.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-Debuginfo.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-Debuginfo.repo
+    backup: true
+
+- name: CentOS-CR.repo
+  template:
+    src: "{{ ansible_distribution_major_version }}/CentOS-CR.repo.j2"
+    dest: /etc/yum.repos.d/CentOS-CR.repo
+    backup: true
