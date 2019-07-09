@@ -1,4 +1,5 @@
 ---
+package_repo_state: present
 package_repo:
   enabled_repos:
     - ovirt-epel
