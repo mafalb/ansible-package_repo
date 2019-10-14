@@ -17,7 +17,7 @@
         content: '# remove me'
         dest: "/etc/yum.repos.d/{{ item }}"
         backup: true
-    
+
     - name: remove old yum repo files
       loop:
         - ovirt-{{ ovirt.version }}.repo
